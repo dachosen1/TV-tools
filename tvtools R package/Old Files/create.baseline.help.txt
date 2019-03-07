@@ -1,0 +1,85 @@
+create.baseline {tvtools}
+
+Extract a baseline data set a time varying data set (panel data).
+
+Description
+
+Extracts the record for each patient at a specified time.  (The default time of 0 corresponds to baseline.)  For specified outcomes, the time to event is computed as a separate variable.  This reduces a time varying data set with many rows per subject to a baseline data set with a single row per subject.
+
+Usage
+
+create.baseline(dat, id.name, time.names, outcome.names=NA, time=0)
+
+Arguments
+
+dat:         a data frame
+
+id.name:     a character.  This must match the identification variable in names(dat)
+
+time.names:  a character vector of length 2.  The components are both in names(dat) and specify the variables for the beginning and end of the time interval.  The beginning time name must be specified before the ending time.
+
+outcome.names:   a character vector specifying the variables in names(dat) of interest as outcomes.  The time to first event will be computed as a separate variable.  This variable will end with ".time".  So, for instance, if "death" is specified as an outcome, then a variable called "death.time" will be created.  Subjects who do not experience an event will be assigned an infinite time (Inf).  The time to event will be computed relative to the value of time.  Patients with recorded events prior to this time will have negative values for the time variable.  If outcome.names is set to NA, then no event time variables are created.
+
+time:  a numeric variable.  This specifies the time of interest.  Setting time=0 signifies a baseline study.  Specifying another time creates a cross-sectional study.  Patients not under observation at the specified time will be discarded from the data set.
+
+Value
+
+create.baseline returns a data frame.  This data frame will include all of the columns of the input data frame dat.  Each subject under observation at the specified time will be given one row.  This row includes the subject's records at the specified time along with the time to the first observed event for each specified outcome.  Outcome times are computed relative to the value of time.  Subjects without an observed event will be assigned a time of Inf. 
+
+
+Examples
+
+n <- 500
+p <- 10
+# Create id variable
+id <- ceiling((1:n)/p)
+
+# Create time variables
+t1 <- rep(0:9, n/p)
+t2 <- 1 + t1
+
+#Create baseline age variable
+age <- as.numeric(matrix(rep(round(rnorm(n/p, mean=50, sd=15),1), p), byrow=TRUE, ncol=n/p))
+
+#Create time-varying weight variable
+weight <- as.numeric(matrix(rep(round(rnorm(n/p, mean=150, sd=25),1), p), byrow=TRUE, ncol=n/p)) + round(rnorm(n, mean=0, sd=5),1)
+
+# Create time-varying illness variable
+illness <- 1*(runif(n)< 0.1)
+
+dat <- as.data.frame(cbind(id, t1, t2, age, weight, illness))
+
+baseline <- create.baseline(dat, id.name="id", time.names=c("t1", "t2"), outcome.names="illness", time=0)
+
+
+create.baseline <- function(dat, id.name, time.names, outcome.names=NA, time=0){
+    tt1 <- which(names(dat)==time.names[1])
+    tt2 <- which(names(dat)==time.names[2])
+
+    if(is.na(tt1)){
+        return("Error:  time.name must be in names(dat).")
+    }
+    
+    w <- which(dat[,tt1]<=time & dat[,tt2] >= time)
+    
+    baseline <- dat[w,]
+    ti <- which(names(baseline)==id.name)
+    o <- order(baseline[,ti])
+    baseline <- baseline[o,]
+    
+    if(is.na(outcome.names)){
+        return(baseline)
+    }
+    
+    source("firstevent.R")
+
+    event.time <- firstevent(dat, id.name, outcome.names, time.name)$tab
+    o <- order(as.numeric(rownames(event.time)))
+    event.time <- event.time[o,]
+      
+    for(k in 1:ncol(event.time)){
+        baseline <- cbind(baseline, as.numeric(event.time[,k]))
+        names(baseline)[ncol(baseline)] <- sprintf("%s.time", colnames(event.time)[k])
+    }
+    return(baseline)
+}

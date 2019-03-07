@@ -1,0 +1,76 @@
+---
+title: "tvtools package — Development Checklist"
+author: "David Shilane"
+date: "April 29, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## List of Functions
+
+- cross.sectional.data
+    + Creates a cross-sectional data set of all patients at a specific time point.
+- create.baseline
+    + Calls cross.sectional.data at time 0.
+- crude.rates
+    + Calculates the crude (unadjusted) rate of outcomes relative to the amount of follow-up time, e.g. the number of heart attacks per 100 patient-years of the use of a medication.
+- era.splits
+    + Reformats data around defined eras.  Those entries that overlap two eras are split into two rows of observations.
+- exposure
+    + Calculates the percentage exposure or utilization of certain variables (e.g. medication adherence) over a specified period of time.
+- first.event
+    + Calculates the time to the first event for each of a list of variables for each id.
+- followup.time
+    + Determines the length of observation for each id.
+- missingness.rates.R
+    + Computes the cross-sectional rate of missing data for a set of variables over time.
+- missingness.plot.R
+    + Plots the rate of missingness in variables over time.
+- timeplot
+    + Graphs a longitudinal history for each id.
+- tvtools.R
+    + Source File that calls all of the other functions.
+
+
+## Updating Source Code
+
+- cross.sectional.data.R
+    + Initial Update Complete
+    + Ready for Testing
+- create.baseline.R
+    + Initial Update Complete
+    + Ready for Testing
+- era.splits.R
+    + Initial Update Complete
+    + Ready for Testing
+- crude.rates.R
+    + Initial Update Complete
+    + Ready for Testing
+- exposure.R
+    + Initial Update Complete
+    + Ready for Testing
+- first.event.R
+    + Initial Update Complete
+    + Ready for Testing
+- followup.time.R
+    + Initial Update Complete
+    + Ready for Testing
+- missingness.rate.R
+    + Initial Update Complete
+    + Ready for Testing
+- missingness.plot.R
+    + Initial Update Complete
+    + Ready for Testing
+- timeplot.R
+    + Current update is sort of half data.table, half conventional
+    + Ready for Testing
+- tvtools.R
+    + Sourcing file
+    + Ready to go pending further updates.
+
+## Updating Example Files
+
+## Testing

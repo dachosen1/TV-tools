@@ -1,0 +1,10 @@
+Package: tvtools
+Version: 0.1-1
+Date: 2012-09-01
+Title: Software for descriptive statistics and visualization of time-varying data.
+Authors@R: c(person("David Shilane", "Developer", role= c("aut", "cre"), email = "dshilane@gmail.com"))
+Author: David Shilane
+Maintainer: David Shilane
+Depends: R (>= 2.4.0), Hmisc
+Description: Tools for the analysis of time-varying data.  Sometimes referred to as either long-form or panel data, this format allows multiple rows per subject over mutually exclusive time intervals.  The package provides tools for computing temporal descriptive statistics, data visualizations, extracting cross-sectional data, computing the time to events, and for calculating the rate of exposure to various factors over time.
+License: GPL (>= 2)

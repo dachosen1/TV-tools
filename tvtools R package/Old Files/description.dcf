@@ -1,0 +1,14 @@
+ Package: tvtools
+     Version: 0.0-1
+     Date: 2012-03-03
+     Title: The tvtools Package for R
+     Authors@R: c(person("David", "Shilane", role = c("aut", "cre"),
+                          email = "dshilane@stanford.edu"))
+     Author: David Shilane
+     Maintainer: David Shilane <dshilane@stanford.edu>
+     Depends: R (>= 1.8.0), Hmisc
+     Suggests: MASS
+     Description:  Software for Descriptive Analysis and Visualization of Time-Varying Data. Computes means and rates with a temporal component, length of follow-up and times to events, and the proportion of exposure to treatments.  Creates cross-sectional data sets, examines data missingness as a function of time, and creates visualizations of subject data.  In medical applications, The entire history of a patient can be illustrated with treatment exposure, procedure dates, and times to events.
+     License: GPL (>= 2)
+     URL:
+     BugReports:

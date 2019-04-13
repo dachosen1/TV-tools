@@ -1,2 +1,3 @@
 ^tvtools\.Rproj$
 ^\.Rproj\.user$
+^\.travis\.yml$
